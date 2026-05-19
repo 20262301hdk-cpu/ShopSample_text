@@ -1,0 +1,40 @@
+﻿@using ShopSample.ViewModels
+@model UserInfometionViewModel
+
+@section Styles {
+    <style>
+        h3 {
+            color: #FFF;
+            background: skyblue;
+            padding: 0.24em;
+        }
+    </style>
+}
+
+@{
+    ViewData["Title"] = "マイページ";
+    string greeting = "こんにちは";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>@greeting、@Model.UserName さん</p>
+
+<p>年齢：@(Model.Age + " 歳")</p>
+
+@if (Model.IsAdmin)
+{
+    <p>あなたは管理者です。</p>
+}
+else
+{
+    <p>一般ユーザーです。</p>
+}
+
+<h3>購入履歴</h3>
+<ul>
+    @foreach (var item in Model.PurchaseHistory)
+    {
+        <li>@item.ProductName - @item.Price 円</li>
+    }
+</ul>

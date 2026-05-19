@@ -1,0 +1,89 @@
+﻿@model RegisterUserInputModel
+@{
+    ViewData["Title"] = "ユーザー新規登録";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-controller="Register" asp-action="Index" method="post">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    
+    <div>
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Bio"></label>
+        <textarea asp-for="Bio"></textarea>
+        <span asp-validation-for="Bio" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Gender"></label><br />
+        <input type="radio" asp-for="Gender" value="男性" /> 男性
+        <input type="radio" asp-for="Gender" value="女性" /> 女性
+        <input type="radio" asp-for="Gender" value="その他" /> その他
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="PaymentMethod"></label>
+        <select asp-for="PaymentMethod" asp-items="Html.GetEnumSelectList<PaymentMethod>()">
+            <option value="">選択してください</option>
+        </select>
+        <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Hobbies"></label><br />
+        <input type="checkbox" name="Hobbies" value="読書" /> 読書
+        <input type="checkbox" name="Hobbies" value="音楽" /> 音楽
+        <input type="checkbox" name="Hobbies" value="旅行" /> 旅行
+        <span asp-validation-for="Hobbies" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="BirthDate"></label>
+        <input asp-for="BirthDate" type="date" />
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+    </div>
+
+    <div>
+        <input asp-for="AcceptTerms" />
+        <label asp-for="AcceptTerms"></label>
+        <span asp-validation-for="AcceptTerms" class="text-danger"></span>
+    </div>
+
+    <button type="submit">確認画面へ</button>
+</form>
+
+@* @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} *@

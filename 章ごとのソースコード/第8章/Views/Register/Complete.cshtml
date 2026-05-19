@@ -1,0 +1,9 @@
+﻿@model RegisterUserInputModel
+@{
+    ViewData["Title"] = "ユーザー新規登録-完了画面";
+}
+<h2>@ViewData["Title"]</h2>
+<p>@Model.UserName さんの登録が完了しました。</p>
+<p>
+    <a asp-action="Index">新規登録に戻る</a>
+</p>

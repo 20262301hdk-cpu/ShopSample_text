@@ -1,0 +1,26 @@
+﻿@using ShopSample.ViewModels
+@model UserInfometionViewModel
+@{
+    ViewData["Title"] = "ユーザー情報の編集";
+}
+<h2>@ViewData["Title"]</h2>
+@if (ViewData["Message"] != null)
+{
+    <p style="color: green">@ViewData["Message"]</p>
+}
+<form asp-controller="Account" asp-action="EditUser" method="post">
+    <div>
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName"/>
+    </div>
+    <div>
+        <label asp-for="Age"></label>
+        <input asp-for="Age"/>
+    </div>
+    <div>
+        <label asp-for="IsAdmin"></label>
+        <input asp-for="IsAdmin"/>
+    </div>
+    <button type="submit">更新する</button>
+</form>
+<a asp-controller="Account" asp-action="MyPage">マイページへ戻る</a>

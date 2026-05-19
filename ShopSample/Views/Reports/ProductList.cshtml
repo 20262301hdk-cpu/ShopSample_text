@@ -1,0 +1,105 @@
+﻿@model ProductListViewModel
+@{
+    ViewData["Title"] = Model.PageTitle;
+}
+<h2>@ViewData["Title"]</h2>
+@if (Model.QueryDescription != null)
+{
+    <p>@Model.QueryDescription</p>
+}
+
+@* Count/Any セクション用の統計情報 *@
+@if (Model.TotalCount != null || Model.HasExpensiveProducts != null)
+{
+    <h3>統計情報</h3>
+    <table class="simple-table">
+        <tbody>
+            @if (Model.TotalCount != null)
+            {
+                <tr>
+                    <th>全商品数</th>
+                    <td>@Model.TotalCount 件</td>
+                </tr>
+            }
+            @if (Model.FilteredCount != null)
+            {
+                <tr>
+                    <th>食品カテゴリ</th>
+                    <td>@Model.FilteredCount 件</td>
+                </tr>
+            }
+            @if (Model.HasExpensiveProducts != null)
+            {
+                <tr>
+                    <th>1,000 円以上の商品</th>
+                    <td>@(Model.HasExpensiveProducts.Value ? "あり" : "なし")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@* Sum セクション用の合計金額 *@
+@if (Model.TotalPriceSum != null)
+{
+    <p><strong>全商品の価格合計: @Model.TotalPriceSum.Value.ToString("N0") 円</strong></p>
+}
+
+@* GroupBy セクション用のカテゴリ別集計 *@
+@if (Model.CategorySummaries != null)
+{
+    <h3>カテゴリ別集計</h3>
+    <table class="simple-table">
+        <thead>
+            <tr>
+                <th>カテゴリ</th>
+                <th>商品数</th>
+                <th>平均価格</th>
+                <th>合計金額</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var summary in Model.CategorySummaries)
+            {
+                <tr>
+                    <td>@summary.CategoryName</td>
+                    <td>@summary.ProductCount 件</td>
+                    <td>@summary.AveragePrice.ToString("N0") 円</td>
+                    <td>@summary.TotalPrice.ToString("N0") 円</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@* 商品テーブル *@
+@if (Model.Products.Any())
+{
+    <h3>商品一覧</h3>
+    <table class="simple-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>商品名</th>
+                <th>価格</th>
+                <th>カテゴリ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Products)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Price.ToString("N0") 円</td>
+                    <td>@item.Category?.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>該当する商品がありません。</p>
+}
+<p><a asp-action="Index">LINQ メニューに戻る</a></p>

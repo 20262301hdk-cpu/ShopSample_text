@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/layout.css" />
+    <title>@ViewData["Title"] - shop</title>
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header>
+        <partial name="_Header">
+    </header>
+    <div>
+        <div id="sidebar">
+            <partial name="_Sidebar">
+        </div>
+        <article id="main">  @RenderBody()  </article>
+    </div>
+    <footer>
+        <partial name="_Footer">
+    </footer>
+</body>
+</html>

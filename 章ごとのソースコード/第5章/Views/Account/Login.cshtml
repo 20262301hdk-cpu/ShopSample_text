@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "ログイン";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>@ViewData["Message"]</p>
+
+<form asp-controller="Account" asp-action="Login" method="post">
+    <div>利用者ID :<input type="text" name="userId" /></div>
+    <div>パスワード:<input type="password" name="password" /></div>
+    <div><input type="submit" value="ログイン" /></div>
+</form>
+
+

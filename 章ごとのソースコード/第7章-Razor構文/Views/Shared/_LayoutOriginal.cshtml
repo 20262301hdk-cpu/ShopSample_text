@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/layout.css" />
+    @RenderSection("Styles", required: false)
+    <title>@ViewData["Title"] - shop</title>
+</head>
+<body>
+    <header>
+        <div> <h1>@ViewData["Title"]</h1> </div>
+    </header>
+    <div>
+        <div id="sidebar">
+            <ul>
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                <li><a asp-controller="Home" asp-action="About">About</a></li>
+            </ul>
+        </div>
+        <article id="main">  @RenderBody()  </article>
+    </div>
+    <footer>
+        <small class="container">
+            Copyright(C) 2021 System Shared co., ltd, ALL Rights Reserved
+        </small>
+    </footer>
+</body>
+</html>

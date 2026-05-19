@@ -1,0 +1,30 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "商品詳細";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="simple-table">
+    <tr>
+        <th>ID</th>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <th>商品名</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>価格</th>
+        <td>@Model.Price.ToString("N0") 円</td>
+    </tr>
+    <tr>
+        <th>カテゴリ</th>
+        <td>@Model.Category?.Name</td>
+    </tr>
+</table>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id">編集</a> |
+    <a asp-action="Index">一覧に戻る</a>
+</p>

@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "ユーザー検索";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>@ViewData["Message"]</p>
+
+<form asp-controller="Account" asp-action="SearchUserId" method="get">
+    <div>利用者ID :<input type="text" name="userId" /></div>
+    <div><input type="submit" value="検索" /></div>
+</form>

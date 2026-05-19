@@ -1,0 +1,60 @@
+﻿@model OrderHistoryViewModel
+@{
+    ViewData["Title"] = Model.PageTitle;
+}
+<h2>@ViewData["Title"]</h2>
+@if (Model.QueryDescription != null)
+{
+    <p>@Model.QueryDescription</p>
+}
+@if (Model.CustomerName != null)
+{
+    <p>顧客: <strong>@Model.CustomerName</strong></p>
+}
+@if (Model.GrandTotal != null)
+{
+    <p><strong>総合計: @Model.GrandTotal.Value.ToString("N0") 円</strong></p>
+}
+@if (Model.Orders.Any())
+{
+    @foreach (var order in Model.Orders)
+    {
+        <h3>
+            注文 #@order.Id（@order.OrderDate.ToString("yyyy/MM/dd")）
+            @if (order.Customer != null)
+            {
+                <text> — @order.Customer.Name</text>
+            }
+        </h3>
+        <table class="simple-table">
+            <thead>
+                <tr>
+                    <th>商品名</th>
+                    <th>数量</th>
+                    <th>単価</th>
+                    <th>小計</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detail in order.OrderDetails)
+                {
+                    <tr>
+                        <td>@detail.Product?.Name</td>
+                        <td>@detail.Quantity</td>
+                        <td>@detail.UnitPrice.ToString("N0") 円</td>
+                        <td>@((detail.Quantity * detail.UnitPrice).ToString("N0")) 円</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @if (Model.OrderTotals != null && Model.OrderTotals.ContainsKey(order.Id))
+        {
+            <p><strong>注文合計: @Model.OrderTotals[order.Id].ToString("N0") 円</strong></p>
+        }
+    }
+}
+else
+{
+    <p>該当する注文がありません。</p>
+}
+<p><a asp-action="Index">LINQ メニューに戻る</a></p>

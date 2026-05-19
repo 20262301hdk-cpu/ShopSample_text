@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "商品一覧";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create">新規作成</a>
+</p>
+
+<table class="simple-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>商品名</th>
+            <th>価格</th>
+            <th>カテゴリ</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Price.ToString("N0") 円</td>
+                <td>@item.Category?.Name</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">詳細</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">編集</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">削除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

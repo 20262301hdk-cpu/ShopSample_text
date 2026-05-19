@@ -1,0 +1,176 @@
+﻿/* 全体のリセット（必要に応じて） */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* body を縦方向の flex コンテナにする */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ヘッダーとフッターは固定の高さ（必要なら） */
+header, footer {
+    background-color: #87ceeb;
+    padding: 10px 20px;
+}
+
+footer {
+    background-color: #87ceeb;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+/* ヘッダー直下のコンテンツ領域を横並びにする */
+body > div {
+    flex: 1; /* 余白をすべてここに割り当てる */
+    display: flex;
+    flex-direction: row;
+}
+
+/* サイドバー */
+#sidebar {
+    width: 140px; /* 固定幅 */
+    background-color: #f0fbfb;
+    border-right: 1px solid #ddd;
+    padding: 20px 10px;
+    box-sizing: border-box;
+}
+
+/* メインコンテンツ */
+#main {
+    flex: 1; /* 残りの幅をすべて使う */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* サイドバー内の ul の余白調整 */
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* リストの記号を非表示 */
+li {
+    list-style-type: none;
+}
+
+/* ##################### */
+/* ##  第9章から追加  ## */
+/* ##################### */
+
+/* フォーム全体が広がりすぎないように最大幅を設定 */
+form {
+    max-width: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 軽い影をつけて浮き立たせる */
+}
+
+    /* 各入力項目のまとまり（div）に下の余白を作る */
+    form > div {
+        margin-bottom: 20px;
+    }
+
+    /* 項目のタイトル（ラベル） */
+    form label {
+        display: block; /* 縦並びにする */
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+/* 文字・日付・パスワードなどの入力ボックスとドロップダウン */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+    width: 100%; /* 横幅いっぱいに広げる */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* 角を少し丸める */
+    box-sizing: border-box; /* paddingを含めて幅100%にするための魔法の記述 */
+    font-size: 16px; /* スマホでズームされないように16px以上にする */
+}
+
+/* 複数行テキストエリアの設定 */
+textarea {
+    height: 100px;
+    resize: vertical; /* 縦方向にだけサイズ変更できるようにする */
+}
+
+/* ラジオボタンとチェックボックスのラベル設定（横並びに上書き） */
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 5px;
+    transform: scale(1.2); /* 少し大きくして押しやすくする */
+}
+
+/* ASP.NET Core のエラーメッセージ用（text-danger） */
+.text-danger {
+    color: #dc3545; /* 目立つ赤色 */
+    font-size: 0.85em; /* 少し小さく */
+    display: block; /* 改行して表示 */
+    margin-top: 5px;
+}
+
+/* 送信ボタン */
+button[type="submit"] {
+    background-color: #007bff; /* 青色 */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%; /* ボタンも横幅いっぱいに */
+    transition: background-color 0.3s; /* 色が変わるアニメーション */
+}
+
+    /* 送信ボタンにマウスが乗ったときの色 */
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+/* HTMLで <table class="simple-table"> のように使います */
+.simple-table {
+    width: 100%;
+    border-collapse: collapse; /* セルの隙間をなくし、線を1本にまとめる */
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+    /* テーブルの見出しとデータセル共通 */
+    .simple-table th,
+    .simple-table td {
+        border: 1px solid #ddd; /* 薄いグレーの線 */
+        padding: 12px 15px; /* 余白を大きめにとって読みやすく */
+        text-align: left;
+    }
+
+    /* テーブルの見出し部分 */
+    .simple-table th {
+        background-color: #f4f6f8; /* 薄い青灰色 */
+        color: #333;
+        font-weight: bold;
+    }
+
+    /* 偶数行の色を変える（ゼブラストライプ） */
+    .simple-table tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+
+    /* マウスが乗った行の色を少し変える（どこを読んでいるかわかりやすくする） */
+    .simple-table tr:hover {
+        background-color: #f1f5f9;
+    }

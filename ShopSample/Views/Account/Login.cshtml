@@ -1,0 +1,31 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "ログイン";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-controller="Account" asp-action="Login" method="post">
+    <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div>
+        <label>
+            <input asp-for="RememberMe" />
+            @Html.DisplayNameFor(m => m.RememberMe)
+        </label>
+    </div>
+    <button type="submit">ログイン</button>
+</form>
+
+<p>アカウントをお持ちでない方は <a asp-controller="Account" asp-action="Register">こちらから登録</a></p>

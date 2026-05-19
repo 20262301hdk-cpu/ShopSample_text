@@ -1,0 +1,36 @@
+﻿@model ProductFormViewModel
+@{
+    ViewData["Title"] = "商品登録";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Price"></label>
+        <input asp-for="Price" type="number" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="CategoryId"></label>
+        <select asp-for="CategoryId" asp-items="Model.CategoryList">
+            <option value="">-- カテゴリを選択 --</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <button type="submit">登録</button>
+</form>
+
+<p>
+    <a asp-action="Index">一覧に戻る</a>
+</p>

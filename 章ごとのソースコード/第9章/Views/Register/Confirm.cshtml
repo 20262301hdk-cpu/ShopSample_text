@@ -1,0 +1,53 @@
+﻿@model RegisterUserInputModel
+@{
+    ViewData["Title"] = "ユーザー新規登録 - 確認画面";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="simple-table">
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.UserName)</th>
+        <td>@Model.UserName</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.Email)</th>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.Password)</th>
+        <td>******** </td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.PhoneNumber)</th>
+        <td>@Model.PhoneNumber</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.Bio)</th>
+        <td>@Model.Bio</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.Gender)</th>
+        <td>@Model.Gender</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.PaymentMethod)</th>
+        <td>@Model.PaymentMethod</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.Hobbies)</th>
+        <td>@string.Join(", ", Model.Hobbies)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.BirthDate)</th>
+        <td>@Model.BirthDate?.ToString("yyyy-MM-dd")</td>
+    </tr>
+</table>
+
+<form asp-action="Index" method="get">
+    <button type="submit">修正する</button>
+</form>
+
+<form asp-action="ConfirmPost" method="post">
+    <button type="submit">登録する</button>
+</form>
