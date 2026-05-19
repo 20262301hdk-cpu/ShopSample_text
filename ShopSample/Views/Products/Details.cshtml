@@ -1,36 +1,30 @@
-﻿@model ShopSample.Models.Product
-
+﻿@model Product
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "商品詳細";
 }
 
-<h1>Details</h1>
+<h2>@ViewData["Title"]</h2>
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<table class="simple-table">
+    <tr>
+        <th>ID</th>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <th>商品名</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>価格</th>
+        <td>@Model.Price.ToString("N0") 円</td>
+    </tr>
+    <tr>
+        <th>カテゴリ</th>
+        <td>@Model.Category?.Name</td>
+    </tr>
+</table>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id">編集</a> |
+    <a asp-action="Index">一覧に戻る</a>
+</p>
