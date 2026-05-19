@@ -20,7 +20,7 @@
 		</PackageReference>
 
 
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.24" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.23" />
 
 
 		<PackageReference Include="X.PagedList.EF" Version="8.4.7" />

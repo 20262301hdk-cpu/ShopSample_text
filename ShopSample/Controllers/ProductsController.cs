@@ -1,207 +1,164 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShopSample.Data;
-using ShopSample.Filter;
 using ShopSample.Models;
-using ShopSample.ViewModels;
-using X.PagedList.EF;
 
-namespace ShopSample.Controllers;
-
-[Authorize]
-[LoggingActionFilter]
-[ServiceFilter(typeof(CustomExceptionFilter))]
-public class ProductsController : Controller
+namespace ShopSample.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public ProductsController(ApplicationDbContext context)
+    public class ProductsController : Controller
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    // Helper method to build category list
-    private async Task<List<SelectListItem>> GetCategoryListAsync()
-    {
-        return await _context.Categories
-            .Select(c => new SelectListItem
+        public ProductsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: Products
+        public async Task<IActionResult> Index()
+        {
+            var applicationDbContext = _context.Products.Include(p => p.Category);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        // GET: Products/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
             {
-                Value = c.Id.ToString(),
-                Text = c.Name
-            })
-            .ToListAsync();
-    }
+                return NotFound();
+            }
 
-    // GET: /Product
-    [AllowAnonymous]
-    public async Task<IActionResult> Index(int? page)
-    {
-        int pageNumber = page ?? 1;
-        const int pageSize = 3;
-
-        var products = await _context.Products
-            .Include(p => p.Category)
-            .OrderBy(p => p.Id)
-            .ToPagedListAsync(pageNumber, pageSize);
-
-        return View(products);
-    }
-
-    // GET: /Product/Details/5
-    [AllowAnonymous]
-    public async Task<IActionResult> Details(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var product = await _context.Products
-            .Include(p => p.Category)
-            .FirstOrDefaultAsync(p => p.Id == id);
-        if (product == null)
-        {
-            return NotFound();
-        }
-
-        return View(product);
-    }
-
-    // GET: /Product/Create
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Create()
-    {
-        var viewModel = new ProductFormViewModel
-        {
-            CategoryList = await GetCategoryListAsync()
-        };
-        return View(viewModel);
-    }
-
-    // POST: /Product/Create
-    [Authorize(Roles = "Admin")]
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(ProductFormViewModel viewModel)
-    {
-        if (ModelState.IsValid)
-        {
-            var product = new Product
-            {
-                Name = viewModel.Name,
-                Price = viewModel.Price,
-                CategoryId = viewModel.CategoryId
-            };
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        viewModel.CategoryList = await GetCategoryListAsync();
-        return View(viewModel);
-    }
-
-    // GET: /Product/Edit/5
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Edit(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var product = await _context.Products.FindAsync(id);
-        if (product == null)
-        {
-            return NotFound();
-        }
-
-        var viewModel = new ProductFormViewModel
-        {
-            Id = product.Id,
-            Name = product.Name,
-            Price = product.Price,
-            CategoryId = product.CategoryId,
-            CategoryList = await GetCategoryListAsync()
-        };
-
-        return View(viewModel);
-    }
-
-    // POST: /Product/Edit/5
-    [Authorize(Roles = "Admin")]
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, ProductFormViewModel viewModel)
-    {
-        if (id != viewModel.Id)
-        {
-            return NotFound();
-        }
-
-        if (ModelState.IsValid)
-        {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
                 return NotFound();
             }
 
-            product.Name = viewModel.Name;
-            product.Price = viewModel.Price;
-            product.CategoryId = viewModel.CategoryId;
+            return View(product);
+        }
 
-            _context.Products.Update(product);
+        // GET: Products/Create
+        public IActionResult Create()
+        {
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
+            return View();
+        }
+
+        // POST: Products/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,CategoryId")] Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(product);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            return View(product);
+        }
+
+        // GET: Products/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            return View(product);
+        }
+
+        // POST: Products/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,CategoryId")] Product product)
+        {
+            if (id != product.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(product);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(product.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            return View(product);
+        }
+
+        // GET: Products/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        // POST: Products/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        viewModel.CategoryList = await GetCategoryListAsync();
-        return View(viewModel);
-    }
-
-    // GET: /Product/Delete/5
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Delete(int? id)
-    {
-        if (id == null)
+        private bool ProductExists(int id)
         {
-            return NotFound();
+            return _context.Products.Any(e => e.Id == id);
         }
-
-        var product = await _context.Products
-            .Include(p => p.Category)
-            .FirstOrDefaultAsync(p => p.Id == id);
-        if (product == null)
-        {
-            return NotFound();
-        }
-
-        return View(product);
     }
-
-    // POST: /Product/Delete/5
-    [Authorize(Roles = "Admin")]
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        var product = await _context.Products.FindAsync(id);
-        if (product != null)
-        {
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-        }
-
-        return RedirectToAction(nameof(Index));
-    }
-
-    // 例外フィルター確認用のテストメソッド
-    //public IActionResult ThrowTest()
-    //{
-    //    throw new Exception("テスト例外: CustomExceptionFilter の動作確認");
-    //}
-
 }
