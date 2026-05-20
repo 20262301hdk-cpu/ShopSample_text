@@ -4,7 +4,7 @@
 <h2>@ViewData["Title"]</h2>
 <p>各リンクをクリックして、LINQメソッドの動作を確認しましょう。アクションメソッドを追加するたびにリンクが動作するようになります。</p>
 <h3>商品クエリ（商品一覧画面）</h3>
-<table class ="simple-table">
+<table class="simple-table">
     <thead>
         <tr>
             <th>LINQメソッド</th>
@@ -14,42 +14,42 @@
     <tbody>
         <tr>
             <td>Where</td>
-            <td><a asp-action ="ProductList">1,000円以上の商品</a></td>
+            <td><a asp-action="ProductList">1,000円以上の商品</a></td>
         </tr>
         <tr>
             <td>OrderBy/ThenBy</td>
-            <td><a asp-action ="ProductSorted">カテゴリ順・価格安い順</a></td>
+            <td><a asp-action="ProductSorted">カテゴリ順・価格安い順</a></td>
         </tr>
         <tr>
             <td>Count/Any</td>
-            <td><a asp-action ="ProductStats">商品統計</a></td>
+            <td><a asp-action="ProductStats">商品統計</a></td>
         </tr>
         <tr>
             <td>Sum</td>
-            <td><a asp-action ="ProductPriceSum">価格合計</a></td>
+            <td><a asp-action="ProductPriceSum">価格合計</a></td>
         </tr>
         <tr>
             <td>GroupBy</td>
-            <td><a asp-action ="CategorySummary">カテゴリ別集計</a></td>
+            <td><a asp-action="CategorySummary">カテゴリ別集計</a></td>
         </tr>
     </tbody>
 </table>
-    <h3>注文クエリ（購入履歴画面）</h3>
-    <table class ="simple-table">
-        <thead>
-            <tr>
-                <th>LINQメソッド</th>
-                <th>確認リンク</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>ThenInclude+Sum</td>
-                <td><a asp-action ="OrderHistory">購入履歴（全件）</a></td>
-            </tr>
-            <tr>
-                <td>メソッドチェーン</td>
-                <td><a asp-action ="OrderHistoryFiltered">購入履歴（2024年11月以降）</a></td>
-            </tr>
-        </tbody>
+<h3>注文クエリ（購入履歴画面）</h3>
+<table class="simple-table">
+    <thead>
+        <tr>
+            <th>LINQメソッド</th>
+            <th>確認リンク</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ThenInclude+Sum</td>
+            <td><a asp-action="OrderHistory">購入履歴（全件）</a></td>
+        </tr>
+        <tr>
+            <td>メソッドチェーン</td>
+            <td><a asp-action="OrderHistoryFiltered">購入履歴（2024年11月以降）</a></td>
+        </tr>
+    </tbody>
 </table>
