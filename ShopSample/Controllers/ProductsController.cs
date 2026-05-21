@@ -11,6 +11,7 @@ namespace ShopSample.Controllers;
 
 [Authorize]
 [LoggingActionFilter]
+[ServiceFilter(typeof(CustomExceptionFilter))]
 public class ProductsController : Controller
 {
     private readonly ApplicationDbContext _context;

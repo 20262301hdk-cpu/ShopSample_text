@@ -36,7 +36,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // 例外フィルターの登録（ServiceFilter で使用するため）
-//builder.Services.AddScoped<CustomExceptionFilter>();
+builder.Services.AddScoped<CustomExceptionFilter>();
 
 // Cookie認証のパス設定（AddIdentity はデフォルトパスを自動設定しないため手動で指定）
 builder.Services.ConfigureApplicationCookie(options =>
