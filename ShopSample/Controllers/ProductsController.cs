@@ -191,9 +191,5 @@ public class ProductsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-    // ⚠ テスト用: 動作確認後に削除すること 
-    public IActionResult ThrowTest()
-    {
-        throw new Exception("テスト例外: CustomExceptionFilter の動作確認");
-    }
+
 }
