@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShopSample.Data;
+using ShopSample.Filter;
 using ShopSample.Models;
 using ShopSample.ViewModels;
 
 namespace ShopSample.Controllers;
 
 [Authorize]
+[LoggingActionFilter]
 public class ProductsController : Controller
 {
     private readonly ApplicationDbContext _context;
