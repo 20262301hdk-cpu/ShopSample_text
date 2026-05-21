@@ -157,6 +157,11 @@ namespace ShopSample.Controllers
             ViewData["Message"] = "ユーザー情報を更新しました。";
             return View(model);
         }
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
 

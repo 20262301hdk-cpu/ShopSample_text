@@ -25,6 +25,10 @@
 </table>
 
 <p>
-    <a asp-action="Edit" asp-route-id="@Model.Id">編集</a> |
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">編集</a>
+        @: |
+    }
     <a asp-action="Index">一覧に戻る</a>
 </p>

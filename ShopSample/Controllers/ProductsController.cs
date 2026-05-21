@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShopSample.Data;
@@ -7,6 +8,7 @@ using ShopSample.ViewModels;
 
 namespace ShopSample.Controllers;
 
+[Authorize]
 public class ProductsController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -29,6 +31,7 @@ public class ProductsController : Controller
     }
 
     // GET: /Product
+    [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
         var products = await _context.Products
@@ -38,6 +41,7 @@ public class ProductsController : Controller
     }
 
     // GET: /Product/Details/5
+    [AllowAnonymous]
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -57,6 +61,7 @@ public class ProductsController : Controller
     }
 
     // GET: /Product/Create
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create()
     {
         var viewModel = new ProductFormViewModel
@@ -67,6 +72,7 @@ public class ProductsController : Controller
     }
 
     // POST: /Product/Create
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(ProductFormViewModel viewModel)
@@ -89,6 +95,7 @@ public class ProductsController : Controller
     }
 
     // GET: /Product/Edit/5
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -115,6 +122,7 @@ public class ProductsController : Controller
     }
 
     // POST: /Product/Edit/5
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, ProductFormViewModel viewModel)
@@ -146,6 +154,7 @@ public class ProductsController : Controller
     }
 
     // GET: /Product/Delete/5
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -165,6 +174,7 @@ public class ProductsController : Controller
     }
 
     // POST: /Product/Delete/5
+    [Authorize(Roles = "Admin")]
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
