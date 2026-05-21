@@ -6,6 +6,7 @@ using ShopSample.Data;
 using ShopSample.Filter;
 using ShopSample.Models;
 using ShopSample.ViewModels;
+using X.PagedList.EF;
 
 namespace ShopSample.Controllers;
 
@@ -35,11 +36,16 @@ public class ProductsController : Controller
 
     // GET: /Product
     [AllowAnonymous]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int? page)
     {
+        int pageNumber = page ?? 1;
+        const int pageSize = 3;
+
         var products = await _context.Products
             .Include(p => p.Category)
-            .ToListAsync();
+            .OrderBy(p => p.Id)
+            .ToPagedListAsync(pageNumber, pageSize);
+
         return View(products);
     }
 
@@ -190,6 +196,12 @@ public class ProductsController : Controller
         }
 
         return RedirectToAction(nameof(Index));
+    }
+
+    // 例外フィルター確認用のテストメソッド
+    public IActionResult ThrowTest()
+    {
+        throw new Exception("テスト例外: CustomExceptionFilter の動作確認");
     }
 
 }

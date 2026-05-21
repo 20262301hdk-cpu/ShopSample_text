@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Product>
+﻿@model IPagedList<Product>
 @{
     ViewData["Title"] = "商品一覧";
 }
@@ -10,6 +10,8 @@
 
     <p><a asp-action="Create">新規作成</a></p>
 }
+
+<p>全 @Model.TotalItemCount 件中 @Model.FirstItemOnPage - @Model.LastItemOnPage 件を表示（@Model.PageNumber / @Model.PageCount ページ）</p>
 
 <table class="simple-table">
     <thead>
@@ -45,3 +47,18 @@
         }
     </tbody>
 </table>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+new PagedListRenderOptions
+{
+    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+
+    LinkToFirstPageFormat = "<< 最初",
+    LinkToPreviousPageFormat = "< 前へ",
+    LinkToNextPageFormat = "次へ >",
+    LinkToLastPageFormat = "最後 >>",
+    MaximumPageNumbersToDisplay = 5
+})
